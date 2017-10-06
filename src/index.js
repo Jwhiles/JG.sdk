@@ -1,15 +1,7 @@
 const F = require('fluture');
 const axios = require('axios');
-const key = require('../apikey.js');
 
 const fetchF = F.encaseP(axios);
-
-const options = {
-  headers: {
-    "x-api-key": key
-  }
-}
-
 
 class JG {
   constructor(apiKey) {
@@ -67,16 +59,7 @@ class JG {
   }
 }
 
-const jg = key => new JG(key);
 
-const justGiving = jg(key);
-const bhf = '183092'
-const macmillan = '2116' 
+const jgContructor = key => new JG(key);
 
-justGiving.charity(bhf)
-  .fork(console.error, console.log);
-
-// myJg.charity(macmillan)
-  // .fork(console.error, console.log);
-
-
+module.exports = jgContructor
