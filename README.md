@@ -61,6 +61,6 @@ const JG = require('jg');
 const jg = JG('apikey');
 
 
-jg.charity('charityid')
+jg.charity.byId('charityid')
   .fork(console.error, console.log);
 ```
