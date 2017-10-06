@@ -16,6 +16,10 @@ This sdk returns [futures, which are similar to promises](https://github.com/flu
 Futures are conceptually similar to Promises, with a more formalised API. The
 simplest use case is to call .fork on the returned future.
 
+There is a lot more that you can do with futures, and it is worth reading
+through [the
+documentation](https://github.com/fluture-js/Fluture#transforming-futures)
+
 #### .fork()
 fork takes two functions as arguments. The first of which will be invoked in
 error cases, the second in success cases

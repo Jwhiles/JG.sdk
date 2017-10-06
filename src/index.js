@@ -22,52 +22,60 @@ const JG = (apiKey) => {
       headers,
     }).map(res => res.data)
 
+    const getCampaignsByCharityId = (id) => fetchF({
+      method: 'get',
+      url: `${campaignsUrl}/${id}`,
+      headers,
+    }).map(res => res.data)
+
     return {
       getPages,
-      getDetails
+      getDetails,
+      getCampaignsByCharityId,
     }
   }
 
   const charity = () => {
+    const charityUrl = `${baseUrl}/charity`
     const byId = (id) => fetchF({
       method: 'get',
-      url: `${baseUrl}/charity/${id}`,
+      url: `${charityUrl}/${id}`,
       headers,
     }).map(res => res.data)
 
     const donations = (id) => fetchF({
       method: 'get',
-      url: `${baseUrl}/charity/${id}/donations`,
+      url: `${charityUrl}/${id}/donations`,
       headers,
     }).map(res => res.data)
 
     const socialNetworks = (id) => fetchF({
       method: 'get',
-      url: `${baseUrl}/charity/${id}/socialnetworks`,
+      url: `${charityUrl}/${id}/socialnetworks`,
       headers,
     }).map(res => res.data)
 
     const events = (id) => fetchF({
       method: 'get',
-      url: `${baseUrl}/charity/${id}/events`,
+      url: `${charityUrl}/${id}/events`,
       headers,
     }).map(res => res.data)
 
     const categories = () => fetchF({
       method: 'get',
-      url: `${baseUrl}/charity/categories`,
+      url: `${charityUrl}/categories`,
       headers,
     }).map(res => res.data)
 
     const fundraisingPageAttribution = (id, pageName) => fetchF({
       method: 'get',
-      url: `${baseUrl}/charity/${id}/pages/${pageName}/attribution`,
+      url: `${charityUrl}/${id}/pages/${pageName}/attribution`,
       headers,
     }).map(res => res.data)
 
     const cares = (id) => fetchF({
       method: 'get',
-      url: `${baseUrl}/charity/${id}/cares`,
+      url: `${charityUrl}/${id}/cares`,
       headers,
     }).map(res => res.data)
 

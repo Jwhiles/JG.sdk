@@ -12,7 +12,10 @@ const charityId = '183092'
 // jg.crowdfunding.pageDetails('KathrynUsborne')
 //   .fork(console.error, console.log);
 
-jg.campaigns.getPages('worldfederationksmic', 'rrf2016')
+// jg.campaigns.getPages('worldfederationksmic', 'rrf2016')
+//   .fork(console.error, console.log);
+
+jg.campaigns.getCampaignsByCharityId(charityId)
   .fork(console.error, console.log);
 
 
