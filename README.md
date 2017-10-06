@@ -45,7 +45,16 @@ g.fundraising.getDonations('paige-crowther')
 // [ { updates: ... }, { images: ... } ] 
 ```
 
-## Usage
+### Help! I only like promises
+Any future returned by this sdk can be converted to a promise using the
+.promise() method
+
+```js
+jg.charity.byId(charityId)
+  .promise().then(console.log)
+```
+
+## Example Usage
 
 ```js
 const JG = require('jg');
