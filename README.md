@@ -35,6 +35,16 @@ fork. Map will only effect succesful results
 .fork(err => console.error(err), result => console.log(result))
 ```
 
+#### .both(future)
+We can combine futures using .both - in our case this will make both API
+requests in parallel - and only resolve if they are both succesful 
+```js
+jg.fundraising.getDonations('paige-crowther')
+  .both(jg.fundraising.getPageUpdates('paige-crowther'))
+  .fork(console.error, console.log)
+// [ { updates: ... }, { images: ... } ] 
+```
+
 ## Usage
 
 ```js

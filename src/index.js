@@ -37,6 +37,7 @@ const JG = (apiKey) => {
 
   const charity = () => {
     const charityUrl = `${baseUrl}/charity`
+
     const byId = (id) => fetchF({
       method: 'get',
       url: `${charityUrl}/${id}`,
@@ -111,10 +112,54 @@ const JG = (apiKey) => {
     }
   }
 
+  const fundraising = () => {
+    const fundraisingUrl = `${baseUrl}/fundraising`;
+
+    const getPageDetailsById = (pageId) => fetchF({
+      method: 'get',
+      url: `${fundraisingUrl}/pagebyid/${pageId}`,
+      headers,
+    }).map(res => res.data)
+
+    const getPageUpdates = (pageName) => fetchF({
+      method: 'get',
+      url: `${fundraisingUrl}/pages/${pageName}/updates`,
+      headers,
+    }).map(res => res.data)
+
+    const thankYouMessage = (pageName) => fetchF({ // currently getting a 401 error for this
+      method: 'get',
+      url: `${fundraisingUrl}/pages/${pageName}/thankyou`,
+      headers,
+    }).map(res => res.data)
+
+    const getImages = (pageName) => fetchF({
+      method: 'get',
+      url: `${fundraisingUrl}/pages/${pageName}/images`,
+      headers,
+    }).map(res => res.data)
+
+    const getDonations = (pageName) => fetchF({
+      method: 'get',
+      url: `${fundraisingUrl}/pages/${pageName}/donations`,
+      headers,
+    }).map(res => res.data)
+
+
+    return {
+      getPageDetailsById,
+      getPageUpdates,
+      thankYouMessage,
+      getImages,
+      getDonations,
+    }
+  }
+
   return {
     campaigns: campaigns(),
     charity: charity(),
     crowdfunding: crowdfunding(),
+    fundraising: fundraising(),
   }
 }
 
