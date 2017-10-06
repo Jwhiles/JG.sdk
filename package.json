@@ -1,0 +1,23 @@
+{
+  "name": "jg.js.sdk",
+  "version": "1.0.0",
+  "description": "Just Giving api SDK - using monads because they have to learn someday",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jwhiles/JG.sdk.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Jwhiles/JG.sdk/issues"
+  },
+  "homepage": "https://github.com/Jwhiles/JG.sdk#readme",
+  "dependencies": {
+    "axios": "^0.16.2",
+    "fluture": "^7.1.3"
+  }
+}
