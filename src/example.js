@@ -24,7 +24,6 @@ const charityId = '183092'
 
 jg.fundraising.getDonations('paige-crowther')
   .both(jg.fundraising.getPageUpdates('paige-crowther'))
-  .both(jg.fundraising.getImages('paige-crowther'))
   .fork(console.error, console.log)
 
 

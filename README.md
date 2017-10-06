@@ -39,7 +39,7 @@ fork. Map will only effect succesful results
 We can combine futures using .both - in our case this will make both API
 requests in parallel - and only resolve if they are both succesful 
 ```js
-jg.fundraising.getDonations('paige-crowther')
+g.fundraising.getDonations('paige-crowther')
   .both(jg.fundraising.getPageUpdates('paige-crowther'))
   .fork(console.error, console.log)
 // [ { updates: ... }, { images: ... } ] 
