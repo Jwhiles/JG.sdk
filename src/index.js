@@ -4,52 +4,109 @@ const axios = require('axios');
 const fetchF = encaseP(axios);
 
 const JG = (apiKey) => {
-  const baseUrl = 'https://api.justgiving.com'
+  const baseUrl = 'https://api.justgiving.com/v1'
   const headers = { 'x-api-key': apiKey }
 
-  const charity = (id) => fetchF({
-    method: 'get',
-    url: `${baseUrl}/v1/charity/${id}`,
-    headers,
-  }).map(res => res.data)
+  const campaigns = () => {
+    const campaignsUrl = `${baseUrl}/campaigns`;
 
-  const charityDonations = (id) => fetchF({
-    method: 'get',
-    url: `${baseUrl}/v1/charity/${id}/donations`,
-    headers,
-  }).map(res => res.data)
+    const getPages = (charityShortName, campaignShortUrl) => fetchF({
+      method: 'get',
+      url: `${campaignsUrl}/${charityShortName}/${campaignShortUrl}/pages`,
+      headers,
+    }).map(res => res.data)
 
-  const charitySocialNetworks = (id) => fetchF({
-    method: 'get',
-    url: `${baseUrl}/v1/charity/${id}/socialnetworks`,
-    headers,
-  }).map(res => res.data)
+    const getDetails = (charityShortName, campaignShortUrl) => fetchF({
+      method: 'get',
+      url: `${campaignsUrl}/${charityShortName}/${campaignShortUrl}`,
+      headers,
+    }).map(res => res.data)
 
-  const charityEvents = (id) => fetchF({
-    method: 'get',
-    url: `${baseUrl}/v1/charity/${id}/events`,
-    headers,
-  }).map(res => res.data)
+    return {
+      getPages,
+      getDetails
+    }
+  }
 
-  const charityCategories = (id) => fetchF({
-    method: 'get',
-    url: `${baseUrl}/v1/charity/categories`,
-    headers,
-  }).map(res => res.data)
+  const charity = () => {
+    const byId = (id) => fetchF({
+      method: 'get',
+      url: `${baseUrl}/charity/${id}`,
+      headers,
+    }).map(res => res.data)
 
-  const charityFundraisingPageAttribution = (id, pageName) => fetchF({
-    method: 'get',
-    url: `${baseUrl}/v1/charity/${id}/pages/${pageName}/attribution`,
-    headers,
-  }).map(res => res.data)
+    const donations = (id) => fetchF({
+      method: 'get',
+      url: `${baseUrl}/charity/${id}/donations`,
+      headers,
+    }).map(res => res.data)
 
-  return { 
-    charity,
-    charityDonations,
-    charitySocialNetworks,
-    charityEvents,
-    charityCategories,
-    charityFundraisingPageAttribution,
+    const socialNetworks = (id) => fetchF({
+      method: 'get',
+      url: `${baseUrl}/charity/${id}/socialnetworks`,
+      headers,
+    }).map(res => res.data)
+
+    const events = (id) => fetchF({
+      method: 'get',
+      url: `${baseUrl}/charity/${id}/events`,
+      headers,
+    }).map(res => res.data)
+
+    const categories = () => fetchF({
+      method: 'get',
+      url: `${baseUrl}/charity/categories`,
+      headers,
+    }).map(res => res.data)
+
+    const fundraisingPageAttribution = (id, pageName) => fetchF({
+      method: 'get',
+      url: `${baseUrl}/charity/${id}/pages/${pageName}/attribution`,
+      headers,
+    }).map(res => res.data)
+
+    const cares = (id) => fetchF({
+      method: 'get',
+      url: `${baseUrl}/charity/${id}/cares`,
+      headers,
+    }).map(res => res.data)
+
+    return { 
+      byId,
+      donations,
+      socialNetworks,
+      events,
+      categories,
+      fundraisingPageAttribution,
+      cares
+    }
+  }
+
+  const crowdfunding = () => {
+    const crowdfundingUrl = `${baseUrl}/crowdfunding`;
+
+    const pages = () => fetchF({
+      method: 'get',
+      url: `${crowdfundingUrl}/pages`,
+      headers,
+    }).map(res => res.data)
+
+    const pageDetails = (shortName) => fetchF({
+      method: 'get',
+      url: `${crowdfundingUrl}/pages/${shortName}`,
+      headers,
+    }).map(res => res.data)
+
+    return {
+      pages,
+      pageDetails,
+    }
+  }
+
+  return {
+    campaigns: campaigns(),
+    charity: charity(),
+    crowdfunding: crowdfunding(),
   }
 }
 
