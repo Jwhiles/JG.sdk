@@ -1,65 +1,56 @@
-const F = require('fluture');
+const { encaseP } = require('fluture');
 const axios = require('axios');
 
-const fetchF = F.encaseP(axios);
+const fetchF = encaseP(axios);
 
-class JG {
-  constructor(apiKey) {
-    this.apiKey = apiKey;
-    this.baseUrl = 'https://api.justgiving.com'
-    this.headers = { 'x-api-key': this.apiKey }
-  }
+const JG = (apiKey) => {
+  const baseUrl = 'https://api.justgiving.com'
+  const headers = { 'x-api-key': apiKey }
 
-  charity(id) {
-    return fetchF({
-      method: 'get',
-      url: `${this.baseUrl}/v1/charity/${id}`,
-      headers: this.headers,
-    }).map(res => res.data)
-  }
+  const charity = (id) => fetchF({
+    method: 'get',
+    url: `${baseUrl}/v1/charity/${id}`,
+    headers,
+  }).map(res => res.data)
 
-  charityDonations(id) {
-    return fetchF({
-      method: 'get',
-      url: `${this.baseUrl}/v1/charity/${id}/donations`,
-      headers: this.headers,
-    }).map(res => res.data)
-  }
+  const charityDonations = (id) => fetchF({
+    method: 'get',
+    url: `${baseUrl}/v1/charity/${id}/donations`,
+    headers,
+  }).map(res => res.data)
 
-  charitySocialNetworks(id) {
-    return fetchF({
-      method: 'get',
-      url: `${this.baseUrl}/v1/charity/${id}/socialnetworks`,
-      headers: this.headers,
-    }).map(res => res.data)
-  }
+  const charitySocialNetworks = (id) => fetchF({
+    method: 'get',
+    url: `${baseUrl}/v1/charity/${id}/socialnetworks`,
+    headers,
+  }).map(res => res.data)
 
-  charityEvents(id) {
-    return fetchF({
-      method: 'get',
-      url: `${this.baseUrl}/v1/charity/${id}/events`,
-      headers: this.headers,
-    }).map(res => res.data)
-  }
+  const charityEvents = (id) => fetchF({
+    method: 'get',
+    url: `${baseUrl}/v1/charity/${id}/events`,
+    headers,
+  }).map(res => res.data)
 
-  charityCategories(id) {
-    return fetchF({
-      method: 'get',
-      url: `${this.baseUrl}/v1/charity/categories`,
-      headers: this.headers,
-    }).map(res => res.data)
-  }
+  const charityCategories = (id) => fetchF({
+    method: 'get',
+    url: `${baseUrl}/v1/charity/categories`,
+    headers,
+  }).map(res => res.data)
 
-  charityFundraisingPageAttribution(id, pageName) { // 
-    return fetchF({
-      method: 'get',
-      url: `${this.baseUrl}/v1/charity/${id}/pages/${pageName}/attribution`,
-      headers: this.headers,
-    }).map(res => res.data)
+  const charityFundraisingPageAttribution = (id, pageName) => fetchF({
+    method: 'get',
+    url: `${baseUrl}/v1/charity/${id}/pages/${pageName}/attribution`,
+    headers,
+  }).map(res => res.data)
+
+  return { 
+    charity,
+    charityDonations,
+    charitySocialNetworks,
+    charityEvents,
+    charityCategories,
+    charityFundraisingPageAttribution,
   }
 }
 
-
-const jgContructor = key => new JG(key);
-
-module.exports = jgContructor
+module.exports = JG
