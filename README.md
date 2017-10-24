@@ -16,10 +16,27 @@ const jg = JG('apikey'); // registers your API key
 
 
 jg.charity.byId('charityid') // sets up an API reqest to get a charity by it's ID
-  .fork(console.error, console.log); // invokes the request then calls one of two supplied functions depending on whether it succeeds
+  .then(console.log)
+  .catch(console.error) // invokes the request then calls one of two supplied functions depending on whether it succeeds
 ```
 
-### Methods available on the returned values
+## Options
+The api constructor takes accepts an options object as a second argument.
+
+### useFutures
+rather than returning promises, the api will return futures. Which are lazily
+evaluated and more fun.
+
+There is a lot more that you can do with futures, and it is worth reading
+through [the
+documentation](https://github.com/fluture-js/Fluture#transforming-futures)
+```
+const JG = require('jg');
+const jg = JG('apikey', { useFutures: true }); // registers your API key
+```
+
+
+### Methods available on the returned futures
 
 #### .fork()
 fork takes two functions as arguments. The first of which will be invoked in
@@ -45,23 +62,4 @@ g.fundraising.getDonations('paige-crowther')
   .fork(console.error, console.log)
 // [ { updates: ... }, { images: ... } ] 
 ```
-
-### Help! I only like promises
-This sdk can return promises using the .promise() method
-
-```js
-jg.charity.byId(charityId)
-  .promise().then(console.log).catch(console.error)
-```
-
-
-### Futures
-This sdk returns [futures, which are similar to promises](https://github.com/fluture-js/Fluture).
-
-Futures are conceptually similar to Promises, with a more formalised API. The
-simplest use case is to call .fork on the returned future.
-
-There is a lot more that you can do with futures, and it is worth reading
-through [the
-documentation](https://github.com/fluture-js/Fluture#transforming-futures)
 

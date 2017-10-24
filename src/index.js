@@ -3,30 +3,35 @@ const axios = require('axios');
 
 const fetchF = encaseP(axios);
 
-const JG = (apiKey) => {
+const JG = (apiKey, options) => {
+  useFutures = options && options.useFutures;
+  const createEndPoint = useFutures
+    ? options => fetchF(options).map(res => res.data)
+    : options => fetchF(options).map(res => res.data).promise();
+
   const baseUrl = 'https://api.justgiving.com/v1'
   const headers = { 'x-api-key': apiKey }
 
   const campaigns = () => {
     const campaignsUrl = `${baseUrl}/campaigns`;
 
-    const getPages = (charityShortName, campaignShortUrl) => fetchF({
+    const getPages = (charityShortName, campaignShortUrl) => createEndPoint({
       method: 'get',
       url: `${campaignsUrl}/${charityShortName}/${campaignShortUrl}/pages`,
       headers,
-    }).map(res => res.data)
+    });
 
-    const getDetails = (charityShortName, campaignShortUrl) => fetchF({
+    const getDetails = (charityShortName, campaignShortUrl) => createEndPoint({
       method: 'get',
       url: `${campaignsUrl}/${charityShortName}/${campaignShortUrl}`,
       headers,
-    }).map(res => res.data)
+    });
 
-    const getCampaignsByCharityId = (id) => fetchF({
+    const getCampaignsByCharityId = (id) => createEndPoint({
       method: 'get',
       url: `${campaignsUrl}/${id}`,
       headers,
-    }).map(res => res.data)
+    });
 
     return {
       getPages,
@@ -38,49 +43,49 @@ const JG = (apiKey) => {
   const charity = () => {
     const charityUrl = `${baseUrl}/charity`
 
-    const byId = (id) => fetchF({
+    const byId = (id) => createEndPoint({
       method: 'get',
       url: `${charityUrl}/${id}`,
       headers,
-    }).map(res => res.data)
+    });
 
-    const donations = (id) => fetchF({
+    const donations = (id) => createEndPoint({
       method: 'get',
       url: `${charityUrl}/${id}/donations`,
       headers,
-    }).map(res => res.data)
+    });
 
-    const socialNetworks = (id) => fetchF({
+    const socialNetworks = (id) => createEndPoint({
       method: 'get',
       url: `${charityUrl}/${id}/socialnetworks`,
       headers,
-    }).map(res => res.data)
+    });
 
-    const events = (id) => fetchF({
+    const events = (id) => createEndPoint({
       method: 'get',
       url: `${charityUrl}/${id}/events`,
       headers,
-    }).map(res => res.data)
+    });
 
-    const categories = () => fetchF({
+    const categories = () => createEndPoint({
       method: 'get',
       url: `${charityUrl}/categories`,
       headers,
-    }).map(res => res.data)
+    });
 
-    const fundraisingPageAttribution = (id, pageName) => fetchF({
+    const fundraisingPageAttribution = (id, pageName) => createEndPoint({
       method: 'get',
       url: `${charityUrl}/${id}/pages/${pageName}/attribution`,
       headers,
-    }).map(res => res.data)
+    });
 
-    const cares = (id) => fetchF({
+    const cares = (id) => createEndPoint({
       method: 'get',
       url: `${charityUrl}/${id}/cares`,
       headers,
-    }).map(res => res.data)
+    });
 
-    return { 
+    return {
       byId,
       donations,
       socialNetworks,
@@ -94,17 +99,17 @@ const JG = (apiKey) => {
   const crowdfunding = () => {
     const crowdfundingUrl = `${baseUrl}/crowdfunding`;
 
-    const pages = () => fetchF({
+    const pages = () => createEndPoint({
       method: 'get',
       url: `${crowdfundingUrl}/pages`,
       headers,
-    }).map(res => res.data)
+    });
 
-    const pageDetails = (shortName) => fetchF({
+    const pageDetails = (shortName) => createEndPoint({
       method: 'get',
       url: `${crowdfundingUrl}/pages/${shortName}`,
       headers,
-    }).map(res => res.data)
+    });
 
     return {
       pages,
@@ -115,35 +120,35 @@ const JG = (apiKey) => {
   const fundraising = () => {
     const fundraisingUrl = `${baseUrl}/fundraising`;
 
-    const getPageDetailsById = (pageId) => fetchF({
+    const getPageDetailsById = (pageId) => createEndPoint({
       method: 'get',
       url: `${fundraisingUrl}/pagebyid/${pageId}`,
       headers,
-    }).map(res => res.data)
+    });
 
-    const getPageUpdates = (pageName) => fetchF({
+    const getPageUpdates = (pageName) => createEndPoint({
       method: 'get',
       url: `${fundraisingUrl}/pages/${pageName}/updates`,
       headers,
-    }).map(res => res.data)
+    });
 
-    const thankYouMessage = (pageName) => fetchF({ // currently getting a 401 error for this
+    const thankYouMessage = (pageName) => createEndPoint({ // currently getting a 401 error for this
       method: 'get',
       url: `${fundraisingUrl}/pages/${pageName}/thankyou`,
       headers,
-    }).map(res => res.data)
+    });
 
-    const getImages = (pageName) => fetchF({
+    const getImages = (pageName) => createEndPoint({
       method: 'get',
       url: `${fundraisingUrl}/pages/${pageName}/images`,
       headers,
-    }).map(res => res.data)
+    });
 
-    const getDonations = (pageName) => fetchF({
+    const getDonations = (pageName) => createEndPoint({
       method: 'get',
       url: `${fundraisingUrl}/pages/${pageName}/donations`,
       headers,
-    }).map(res => res.data)
+    });
 
 
     return {
